@@ -1,0 +1,47 @@
+<div class="task-list-container">
+    <h1>Mis Tareas</h1>
+
+    @if (tareas.length === 0) {
+    <div class="empty-state">
+        <p>No hay tareas registradas</p>
+        <a routerLink="/agregar-tarea" class="btn-primary">Crear primera tarea</a>
+    </div>
+    } @else {
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs uppercase bg-gray-100 text-gray-700">
+                <tr>
+                    <th class="px-4 py-2">Título</th>
+                    <th class="px-4 py-2">Descripción</th>
+                    <th class="px-4 py-2">Fecha</th>
+                    <th class="px-4 py-2">Estado</th>
+                    <th class="px-4 py-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (tarea of tareas; track tarea.id) {
+                <tr class="bg-white border-b">
+                    <td class="px-4 py-2 font-medium">{{ tarea.titulo }}</td>
+                    <td class="px-4 py-2">{{ tarea.descripcion || 'Sin descripción' }}</td>
+                    <td class="px-4 py-2">{{ tarea.fecha }}</td>
+                    <td class="px-4 py-2">
+                        {{ tarea.completada ? '✅ Completada' : '🔄 Pendiente' }}
+                    </td>
+                    <td class="px-4 py-2 flex flex-wrap gap-2">
+                        <a [routerLink]="['/editar-tarea', tarea.id]" class="btn-icon">
+                            <i class="edit-icon"></i>
+                        </a>
+                        <button (click)="eliminarTarea(tarea.id)" class="btn-icon">
+                            <i class="delete-icon"></i>
+                        </button>
+                        <a [routerLink]="['/tareas', tarea.id]" class="btn-secondary">
+                            Ver Detalle
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+</div>
